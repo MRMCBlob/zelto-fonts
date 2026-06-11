@@ -1,0 +1,54 @@
+{
+  "$schema": "../../schema.json",
+  "name": "parkinsans",
+  "displayName": "Parkinsans",
+  "version": "1.0",
+  "category": "sans",
+  "designer": "Red Stone",
+  "license": {
+    "type": "OFL-1.1",
+    "url": "https://openfontlicense.org"
+  },
+  "source": "https://github.com/redstonedesign/parkinsans",
+  "variable": false,
+  "weights": [300, 400, 500, 600, 700, 800],
+  "styles": ["normal"],
+  "fallback": "sans-serif",
+  "previewText": "Accessible type with human energy.",
+  "description": "A geometric sans-serif designed for Parkinson’s UK, balancing energetic display character with accessible short-form reading.",
+  "submittedBy": {
+    "github": "thisisbremlo"
+  },
+  "files": [
+    {
+      "path": "/r/fonts/parkinsans/Parkinsans-Light.woff2",
+      "weight": 300,
+      "style": "normal"
+    },
+    {
+      "path": "/r/fonts/parkinsans/Parkinsans-Regular.woff2",
+      "weight": 400,
+      "style": "normal"
+    },
+    {
+      "path": "/r/fonts/parkinsans/Parkinsans-Medium.woff2",
+      "weight": 500,
+      "style": "normal"
+    },
+    {
+      "path": "/r/fonts/parkinsans/Parkinsans-SemiBold.woff2",
+      "weight": 600,
+      "style": "normal"
+    },
+    {
+      "path": "/r/fonts/parkinsans/Parkinsans-Bold.woff2",
+      "weight": 700,
+      "style": "normal"
+    },
+    {
+      "path": "/r/fonts/parkinsans/Parkinsans-ExtraBold.woff2",
+      "weight": 800,
+      "style": "normal"
+    }
+  ]
+}
