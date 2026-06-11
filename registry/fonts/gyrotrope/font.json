@@ -1,0 +1,54 @@
+{
+  "$schema": "../../schema.json",
+  "name": "gyrotrope",
+  "displayName": "Gyrotrope",
+  "version": "1.0",
+  "category": "sans",
+  "designer": "David Moles",
+  "license": {
+    "type": "OFL-1.1",
+    "url": "https://openfontlicense.org"
+  },
+  "source": "https://github.com/dmoles/gyrotrope-font",
+  "variable": false,
+  "weights": [400, 500, 600, 700, 800, 900],
+  "styles": ["normal"],
+  "fallback": "sans-serif",
+  "previewText": "Rounded futures need sharp systems.",
+  "description": "A wide, rounded geometric sans-serif inspired by 1960s futurist typefaces such as Microgramma and Eurostile.",
+  "submittedBy": {
+    "github": "thisisbremlo"
+  },
+  "files": [
+    {
+      "path": "/r/fonts/gyrotrope/Gyrotrope-Regular.woff2",
+      "weight": 400,
+      "style": "normal"
+    },
+    {
+      "path": "/r/fonts/gyrotrope/Gyrotrope-Medium.woff2",
+      "weight": 500,
+      "style": "normal"
+    },
+    {
+      "path": "/r/fonts/gyrotrope/Gyrotrope-SemiBold.woff2",
+      "weight": 600,
+      "style": "normal"
+    },
+    {
+      "path": "/r/fonts/gyrotrope/Gyrotrope-Bold.woff2",
+      "weight": 700,
+      "style": "normal"
+    },
+    {
+      "path": "/r/fonts/gyrotrope/Gyrotrope-ExtraBold.woff2",
+      "weight": 800,
+      "style": "normal"
+    },
+    {
+      "path": "/r/fonts/gyrotrope/Gyrotrope-Heavy.woff2",
+      "weight": 900,
+      "style": "normal"
+    }
+  ]
+}
