@@ -7,6 +7,7 @@ import { geistMono, geistSans } from "./fonts";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -67,6 +68,7 @@ export default function RootLayout({
           <main className="flex-1">{children}</main>
           <SiteFooter />
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
