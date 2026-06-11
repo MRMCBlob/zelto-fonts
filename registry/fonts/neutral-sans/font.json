@@ -1,0 +1,32 @@
+{
+  "$schema": "../../schema.json",
+  "name": "neutral-sans",
+  "displayName": "Neutral Sans",
+  "version": "1.1",
+  "category": "sans",
+  "designer": "Barry Shawn",
+  "license": {
+    "type": "OFL-1.1",
+    "url": "https://openfontlicense.org"
+  },
+  "source": "https://github.com/BesignLab/Neutral-Sans",
+  "variable": true,
+  "axes": {
+    "wght": [400, 900]
+  },
+  "weights": [400, 500, 700, 900],
+  "styles": ["normal"],
+  "fallback": "sans-serif",
+  "previewText": "Warm clarity for modern interfaces.",
+  "description": "A modern humanist sans-serif with rounded details, strong readability, variable weight support, and multilingual coverage.",
+  "submittedBy": {
+    "github": "thisisbremlo"
+  },
+  "files": [
+    {
+      "path": "/r/fonts/neutral-sans/NeutralSans-Variable.woff2",
+      "weight": "400 900",
+      "style": "normal"
+    }
+  ]
+}
