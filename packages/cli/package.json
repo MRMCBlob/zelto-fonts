@@ -1,0 +1,47 @@
+{
+  "name": "zelto-fonts",
+  "version": "0.1.0",
+  "description": "Install fonts that are actually good into your React project: npx zelto-fonts add <font>",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MRMCBlob/zelto-fonts.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://fonts.zelto.app",
+  "bin": {
+    "zelto-fonts": "./dist/index.mjs"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.5.0",
+    "citty": "^0.2.0",
+    "picocolors": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@zelto/registry": "workspace:*",
+    "tsdown": "^0.20.0",
+    "typescript": "^5.8.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "fonts",
+    "cli",
+    "react",
+    "nextjs",
+    "zelto"
+  ]
+}

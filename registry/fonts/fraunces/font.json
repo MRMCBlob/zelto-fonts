@@ -1,0 +1,25 @@
+{
+  "$schema": "../../schema.json",
+  "name": "fraunces",
+  "displayName": "Fraunces",
+  "version": "1.0",
+  "category": "serif",
+  "designer": "Undercase Type",
+  "license": {
+    "type": "OFL-1.1",
+    "url": "https://github.com/undercasetype/Fraunces/blob/master/OFL.txt"
+  },
+  "source": "https://github.com/undercasetype/Fraunces",
+  "variable": true,
+  "axes": { "wght": [100, 900], "opsz": [9, 144], "SOFT": [0, 100], "WONK": [0, 1] },
+  "weights": [400, 500, 600, 700, 900],
+  "styles": ["normal", "italic"],
+  "fallback": "serif",
+  "previewText": "A wonky, old-style soft serif.",
+  "description": "A display serif inspired by early 20th century typefaces, with optical sizing, softness, and wonk axes.",
+  "submittedBy": { "github": "MRMCBlob" },
+  "files": [
+    { "path": "/r/fonts/fraunces/FrauncesVariable.woff2", "weight": "100 900", "style": "normal" },
+    { "path": "/r/fonts/fraunces/FrauncesVariable-Italic.woff2", "weight": "100 900", "style": "italic" }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "../../schema.json",
+  "name": "geist",
+  "displayName": "Geist",
+  "version": "1.7.2",
+  "category": "sans",
+  "designer": "Vercel",
+  "license": {
+    "type": "OFL-1.1",
+    "url": "https://github.com/vercel/geist-font/blob/main/LICENSE.TXT"
+  },
+  "source": "https://github.com/vercel/geist-font",
+  "variable": true,
+  "axes": { "wght": [100, 900] },
+  "weights": [400, 500, 600, 700],
+  "styles": ["normal", "italic"],
+  "fallback": "sans-serif",
+  "previewText": "Design is the silent ambassador of your brand.",
+  "description": "A Swiss-inspired sans-serif built for legibility and precision, designed by Vercel for the modern web.",
+  "submittedBy": { "github": "MRMCBlob" },
+  "files": [
+    { "path": "/r/fonts/geist/GeistVariable.woff2", "weight": "100 900", "style": "normal" },
+    { "path": "/r/fonts/geist/GeistVariable-Italic.woff2", "weight": "100 900", "style": "italic" }
+  ]
+}

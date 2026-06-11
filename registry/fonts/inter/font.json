@@ -1,0 +1,26 @@
+{
+  "$schema": "../../schema.json",
+  "name": "inter",
+  "displayName": "Inter",
+  "version": "4.1",
+  "category": "sans",
+  "designer": "Rasmus Andersson",
+  "license": {
+    "type": "OFL-1.1",
+    "url": "https://github.com/rsms/inter/blob/master/LICENSE.txt"
+  },
+  "source": "https://github.com/rsms/inter",
+  "variable": true,
+  "axes": { "wght": [100, 900], "opsz": [14, 32] },
+  "weights": [400, 500, 600, 700],
+  "styles": ["normal", "italic"],
+  "features": ["extended-charset"],
+  "fallback": "sans-serif",
+  "previewText": "Sphinx of black quartz, judge my vow.",
+  "description": "A typeface carefully crafted and designed for computer screens. The de-facto standard for product interfaces.",
+  "submittedBy": { "github": "MRMCBlob" },
+  "files": [
+    { "path": "/r/fonts/inter/InterVariable.woff2", "weight": "100 900", "style": "normal" },
+    { "path": "/r/fonts/inter/InterVariable-Italic.woff2", "weight": "100 900", "style": "italic" }
+  ]
+}

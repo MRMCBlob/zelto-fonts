@@ -1,0 +1,26 @@
+{
+  "$schema": "../../schema.json",
+  "name": "geist-mono",
+  "displayName": "Geist Mono",
+  "version": "1.7.2",
+  "category": "mono",
+  "designer": "Vercel",
+  "license": {
+    "type": "OFL-1.1",
+    "url": "https://github.com/vercel/geist-font/blob/main/LICENSE.TXT"
+  },
+  "source": "https://github.com/vercel/geist-font",
+  "variable": true,
+  "axes": { "wght": [100, 900] },
+  "weights": [400, 500, 600, 700],
+  "styles": ["normal", "italic"],
+  "features": ["ligatures"],
+  "fallback": "monospace",
+  "previewText": "const font = await zelto.add(\"geist-mono\")",
+  "description": "The monospace companion to Geist. Clean, precise, and made for code.",
+  "submittedBy": { "github": "MRMCBlob" },
+  "files": [
+    { "path": "/r/fonts/geist-mono/GeistMonoVariable.woff2", "weight": "100 900", "style": "normal" },
+    { "path": "/r/fonts/geist-mono/GeistMonoVariable-Italic.woff2", "weight": "100 900", "style": "italic" }
+  ]
+}

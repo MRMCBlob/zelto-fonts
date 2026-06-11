@@ -1,0 +1,16 @@
+{
+  "name": "zelto",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm --filter web dev",
+    "build": "pnpm registry:build && pnpm -r build",
+    "registry:build": "node scripts/build-registry.ts"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "fflate": "^0.8.3"
+  }
+}

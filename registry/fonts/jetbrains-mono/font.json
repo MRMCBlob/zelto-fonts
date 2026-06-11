@@ -1,0 +1,26 @@
+{
+  "$schema": "../../schema.json",
+  "name": "jetbrains-mono",
+  "displayName": "JetBrains Mono",
+  "version": "2.304",
+  "category": "mono",
+  "designer": "JetBrains",
+  "license": {
+    "type": "OFL-1.1",
+    "url": "https://github.com/JetBrains/JetBrainsMono/blob/master/OFL.txt"
+  },
+  "source": "https://github.com/JetBrains/JetBrainsMono",
+  "variable": true,
+  "axes": { "wght": [100, 800] },
+  "weights": [400, 500, 700, 800],
+  "styles": ["normal", "italic"],
+  "features": ["ligatures", "extended-charset"],
+  "fallback": "monospace",
+  "previewText": "() => ({ ligatures: true, zero: \"0O\" })",
+  "description": "A typeface for developers. Increased x-height, code ligatures, and 145 languages supported.",
+  "submittedBy": { "github": "MRMCBlob" },
+  "files": [
+    { "path": "/r/fonts/jetbrains-mono/JetBrainsMonoVariable.woff2", "weight": "100 800", "style": "normal" },
+    { "path": "/r/fonts/jetbrains-mono/JetBrainsMonoVariable-Italic.woff2", "weight": "100 800", "style": "italic" }
+  ]
+}

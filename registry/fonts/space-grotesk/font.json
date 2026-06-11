@@ -1,0 +1,24 @@
+{
+  "$schema": "../../schema.json",
+  "name": "space-grotesk",
+  "displayName": "Space Grotesk",
+  "version": "2.0.0",
+  "category": "display",
+  "designer": "Florian Karsten",
+  "license": {
+    "type": "OFL-1.1",
+    "url": "https://github.com/floriankarsten/space-grotesk/blob/master/OFL.txt"
+  },
+  "source": "https://github.com/floriankarsten/space-grotesk",
+  "variable": true,
+  "axes": { "wght": [300, 700] },
+  "weights": [300, 400, 500, 600, 700],
+  "styles": ["normal"],
+  "fallback": "sans-serif",
+  "previewText": "Space is big. Really big.",
+  "description": "A proportional sans-serif derived from Space Mono, with retro-futuristic details that shine at display sizes.",
+  "submittedBy": { "github": "MRMCBlob" },
+  "files": [
+    { "path": "/r/fonts/space-grotesk/SpaceGroteskVariable.woff2", "weight": "300 700", "style": "normal" }
+  ]
+}
