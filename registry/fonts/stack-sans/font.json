@@ -1,0 +1,37 @@
+{
+  "$schema": "../../schema.json",
+  "name": "stack-sans",
+  "displayName": "Stack Sans",
+  "version": "1.000",
+  "category": "sans",
+  "designer": "Koto",
+  "license": {
+    "type": "OFL-1.1",
+    "url": "https://openfontlicense.org"
+  },
+  "source": "https://github.com/stackblitz/stack-sans",
+  "variable": true,
+  "axes": {
+    "wght": [300, 800]
+  },
+  "weights": [300, 400, 500, 600, 700, 800],
+  "styles": ["normal", "italic"],
+  "fallback": "sans-serif",
+  "previewText": "Build answers with sharper type.",
+  "description": "A modernist sans-serif family with distinctive notched detailing, crafted for Stack Overflow across headline and text use.",
+  "submittedBy": {
+    "github": "thisisbremlo"
+  },
+  "files": [
+    {
+      "path": "/r/fonts/stack-sans/StackSans-Variable.woff2",
+      "weight": "300 800",
+      "style": "normal"
+    },
+    {
+      "path": "/r/fonts/stack-sans/StackSans-Italic-Variable.woff2",
+      "weight": "300 800",
+      "style": "italic"
+    }
+  ]
+}
