@@ -1,6 +1,6 @@
 import { defineCommand } from "citty";
 import pc from "picocolors";
-import { FONT_CATEGORIES } from "@zelto/registry/constants";
+import { FONT_CATEGORIES, humanizeCategory } from "@zelto/registry/constants";
 import { resolveRegistryUrl } from "../constants";
 import { fetchRegistry, RegistryError } from "../registry-client";
 
@@ -10,6 +10,13 @@ const CATEGORY_LABELS: Record<string, string> = {
   mono: "Monospace",
   display: "Display",
 };
+
+/** Curated categories first, then any new categories found in the registry (sorted). */
+function orderedCategories(items: { category: string }[]): string[] {
+  const present = new Set(items.map((item) => item.category));
+  const extras = [...present].filter((c) => !FONT_CATEGORIES.includes(c as never)).sort();
+  return [...FONT_CATEGORIES, ...extras];
+}
 
 export const list = defineCommand({
   meta: {
@@ -35,10 +42,10 @@ export const list = defineCommand({
 
     console.log(`\n${pc.inverse(" zelto ")} ${registry.items.length} fonts · ${pc.dim(baseUrl)}\n`);
 
-    for (const category of FONT_CATEGORIES) {
+    for (const category of orderedCategories(registry.items)) {
       const fonts = registry.items.filter((item) => item.category === category);
       if (fonts.length === 0) continue;
-      console.log(pc.bold(pc.underline(CATEGORY_LABELS[category] ?? category)));
+      console.log(pc.bold(pc.underline(CATEGORY_LABELS[category] ?? humanizeCategory(category))));
       for (const font of fonts) {
         const weights = font.variable
           ? pc.yellow("variable")

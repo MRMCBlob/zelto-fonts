@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { motion } from "motion/react";
 import type { Font } from "@zelto/registry";
+import { humanizeCategory } from "@zelto/registry/constants";
 import { FontCard } from "@/components/font-card";
 import { Slider } from "@/components/ui/slider";
 import {
@@ -14,13 +15,26 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const CATEGORY_OPTIONS = [
-  { value: "all", label: "All types" },
-  { value: "sans", label: "Sans Serif" },
-  { value: "serif", label: "Serif" },
-  { value: "mono", label: "Monospace" },
-  { value: "display", label: "Display" },
-];
+const CATEGORY_LABELS: Record<string, string> = {
+  sans: "Sans Serif",
+  serif: "Serif",
+  mono: "Monospace",
+  display: "Display",
+};
+
+/** Curated order first, then any new categories present in the catalog (sorted). */
+const CATEGORY_ORDER = ["sans", "serif", "mono", "display"];
+
+function categoryOptions(fonts: Font[]): { value: string; label: string }[] {
+  const present = new Set(fonts.map((f) => f.category));
+  const extras = [...present].filter((c) => !CATEGORY_ORDER.includes(c)).sort();
+  return [
+    { value: "all", label: "All types" },
+    ...[...CATEGORY_ORDER, ...extras]
+      .filter((c) => present.has(c))
+      .map((c) => ({ value: c, label: CATEGORY_LABELS[c] ?? humanizeCategory(c) })),
+  ];
+}
 
 const FEATURE_OPTIONS = [
   { value: "any", label: "Anything" },
@@ -45,6 +59,8 @@ export function Catalog({ fonts }: { fonts: Font[] }) {
   const [size, setSize] = useState(56);
   const [category, setCategory] = useState("all");
   const [feature, setFeature] = useState("any");
+
+  const categories = useMemo(() => categoryOptions(fonts), [fonts]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -86,7 +102,7 @@ export function Catalog({ fonts }: { fonts: Font[] }) {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {CATEGORY_OPTIONS.map((option) => (
+                  {categories.map((option) => (
                     <SelectItem key={option.value} value={option.value}>
                       {option.label}
                     </SelectItem>

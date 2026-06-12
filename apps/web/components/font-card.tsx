@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import Link from "next/link";
 import type { Font } from "@zelto/registry";
+import { humanizeCategory } from "@zelto/registry/constants";
 import { Badge } from "@/components/ui/badge";
 import { previewFamily } from "@/lib/preview";
 
@@ -32,7 +33,7 @@ export function FontCard({ font, text, size }: { font: Font; text: string; size:
           <span className="text-xs text-muted-foreground">{font.designer}</span>
         </div>
         <Badge variant="secondary" className="font-mono text-[11px] font-normal text-muted-foreground">
-          {CATEGORY_LABELS[font.category] ?? font.category}
+          {CATEGORY_LABELS[font.category] ?? humanizeCategory(font.category)}
         </Badge>
       </div>
       <p

@@ -72,7 +72,7 @@ export default function SubmitPage() {
   "name": "your-font",
   "displayName": "Your Font",
   "version": "1.0",
-  "category": "sans",
+  "category": "sans",  // sans · serif · mono · display, or your own slug
   "designer": "Jane Doe",
   "license": { "type": "OFL-1.1", "url": "https://…" },
   "source": "https://github.com/…",
