@@ -12,10 +12,34 @@
   "source": "https://github.com/tiktok/TikTokSans",
   "variable": true,
   "axes": {
-    "wght": [400, 900]
+    "opsz": [
+      12,
+      72
+    ],
+    "slnt": [
+      0,
+      -10
+    ],
+    "wdth": [
+      75,
+      125
+    ],
+    "wght": [
+      400,
+      900
+    ]
   },
-  "weights": [400, 500, 600, 700, 800, 900],
-  "styles": ["normal"],
+  "weights": [
+    400,
+    500,
+    600,
+    700,
+    800,
+    900
+  ],
+  "styles": [
+    "normal"
+  ],
   "fallback": "sans-serif",
   "previewText": "A social rhythm for product type.",
   "description": "A modern sans-serif typeface from TikTok, built for clear brand expression across digital interfaces and communication.",
@@ -24,7 +48,7 @@
   },
   "files": [
     {
-      "path": "/r/fonts/tiktok-sans/TikTokSans-Variable.woff2",
+      "path": "/r/fonts/tiktok-sans/TikTokSans[opsz,slnt,wdth,wght].woff2",
       "weight": "400 900",
       "style": "normal"
     }

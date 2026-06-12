@@ -11,8 +11,12 @@
   },
   "source": "https://departuremono.com",
   "variable": false,
-  "weights": [400],
-  "styles": ["normal"],
+  "weights": [
+    400
+  ],
+  "styles": [
+    "normal"
+  ],
   "fallback": "monospace",
   "previewText": "Pixel-perfect type for quiet systems.",
   "description": "A pixel-conscious monospace typeface with support for Latin, Greek, small caps, old-style numerals, fractions, and selected symbols.",

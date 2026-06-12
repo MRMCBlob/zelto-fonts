@@ -12,10 +12,20 @@
   "source": "https://github.com/BesignLab/Neutral-Sans",
   "variable": true,
   "axes": {
-    "wght": [400, 900]
+    "wght": [
+      400,
+      900
+    ]
   },
-  "weights": [400, 500, 700, 900],
-  "styles": ["normal"],
+  "weights": [
+    400,
+    500,
+    700,
+    900
+  ],
+  "styles": [
+    "normal"
+  ],
   "fallback": "sans-serif",
   "previewText": "Warm clarity for modern interfaces.",
   "description": "A modern humanist sans-serif with rounded details, strong readability, variable weight support, and multilingual coverage.",
@@ -24,7 +34,7 @@
   },
   "files": [
     {
-      "path": "/r/fonts/neutral-sans/NeutralSans-Variable.woff2",
+      "path": "/r/fonts/neutral-sans/NeutralSansVF.woff2",
       "weight": "400 900",
       "style": "normal"
     }

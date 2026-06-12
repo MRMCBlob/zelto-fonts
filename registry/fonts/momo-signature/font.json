@@ -11,8 +11,12 @@
   },
   "source": "https://momo.vn",
   "variable": false,
-  "weights": [400],
-  "styles": ["normal"],
+  "weights": [
+    400
+  ],
+  "styles": [
+    "normal"
+  ],
   "fallback": "cursive",
   "previewText": "A personal mark inside digital trust.",
   "description": "A handwritten signature-inspired typeface designed to add a personal, trusted, and individual tone.",

@@ -12,12 +12,32 @@
   "source": "https://github.com/zalando/sans",
   "variable": true,
   "axes": {
-    "wght": [200, 900],
-    "wdth": [75, 125],
-    "slnt": [0, -12]
+    "wdth": [
+      75,
+      125
+    ],
+    "wght": [
+      200,
+      900
+    ],
+    "slnt": [
+      0,
+      -12
+    ]
   },
-  "weights": [200, 300, 400, 500, 600, 700, 800, 900],
-  "styles": ["normal", "italic"],
+  "weights": [
+    200,
+    300,
+    400,
+    500,
+    600,
+    700,
+    800,
+    900
+  ],
+  "styles": [
+    "normal"
+  ],
   "fallback": "sans-serif",
   "previewText": "Bold systems can still feel welcoming.",
   "description": "A flexible grotesque sans-serif developed for Zalando, combining clarity, expressive range, and brand personality through variable axes.",
@@ -26,14 +46,9 @@
   },
   "files": [
     {
-      "path": "/r/fonts/zalando-sans/ZalandoSans-Variable.woff2",
+      "path": "/r/fonts/zalando-sans/ZalandoSans[wdth,wght,slnt].woff2",
       "weight": "200 900",
       "style": "normal"
-    },
-    {
-      "path": "/r/fonts/zalando-sans/ZalandoSans-Italic-Variable.woff2",
-      "weight": "200 900",
-      "style": "italic"
     }
   ]
 }
