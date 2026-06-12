@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 📖 How to submit a font
+    url: https://fonts.zelto.app/submit
+    about: The full guide to adding a font via pull request.
+  - name: 🅰️ Submit a font yourself (pull request)
+    url: https://github.com/MRMCBlob/zelto-fonts/compare
+    about: Already have the .woff2 files and license? Open a PR — it's the fastest path.
