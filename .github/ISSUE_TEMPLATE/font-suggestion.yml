@@ -1,0 +1,73 @@
+name: 🅰️ Suggest a font
+description: Suggest a font you'd like to see in the registry (no PR required).
+title: "[Font]: "
+labels: ["font suggestion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a font! Use this if you want a font **added** but
+        aren't submitting it yourself. If you're ready to submit the files,
+        [open a pull request](https://github.com/MRMCBlob/zelto-fonts/compare)
+        instead — it ships faster.
+
+        Zelto is curated and only accepts fonts under an **open, redistributable
+        license** (OFL-1.1 or equivalent). Freeware / "free for personal use"
+        fonts can't be accepted.
+  - type: input
+    id: name
+    attributes:
+      label: Font name
+      placeholder: e.g. Inter
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source / homepage
+      description: Link to the official repo or page where the font and its license live.
+      placeholder: https://github.com/…
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - sans
+        - serif
+        - mono
+        - display
+        - other / not sure
+    validations:
+      required: true
+  - type: dropdown
+    id: license
+    attributes:
+      label: License
+      description: Only open, redistributable licenses are eligible.
+      options:
+        - OFL-1.1
+        - Apache-2.0
+        - MIT
+        - Other open license (specify below)
+        - Unknown
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why this font?
+      description: What makes it actually good? Where would you use it?
+      placeholder: One or two sentences on what makes it worth curating.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I searched [existing issues](https://github.com/MRMCBlob/zelto-fonts/issues) and this font hasn't been suggested yet.
+          required: true
+        - label: I confirmed the license permits redistribution (not freeware / personal-use-only).
+          required: true
