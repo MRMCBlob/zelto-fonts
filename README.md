@@ -2,6 +2,9 @@
 
 Fonts that are actually good — a curated open-source font registry with a website and a CLI that installs fonts into React projects like components.
 
+## Techstack:
+![NPM Badge](https://svgl-badge.vercel.app/api/Software/NPM?theme=dark), ![PNPM Badge](https://svgl-badge.vercel.app/api/Software/Pnpm?theme=dark), ![NEXT.JS Badge](https://svgl-badge.vercel.app/api/Framework/Next.js?theme=dark), ![React Badge](https://svgl-badge.vercel.app/api/Library/React?theme=dark), ![TS Badge](https://svgl-badge.vercel.app/api/Language/TypeScript?theme=dark), ![GitHub Badge](https://svgl-badge.vercel.app/api/Software/GitHub?theme=dark)
+
 ```sh
 npx zelto-fonts add inter
 ```
