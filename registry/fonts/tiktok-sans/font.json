@@ -1,0 +1,56 @@
+{
+  "$schema": "../../schema.json",
+  "name": "tiktok-sans",
+  "displayName": "TikTok Sans",
+  "version": "1.0",
+  "category": "sans",
+  "designer": "TikTok Inc.",
+  "license": {
+    "type": "OFL-1.1",
+    "url": "https://openfontlicense.org"
+  },
+  "source": "https://github.com/tiktok/TikTokSans",
+  "variable": true,
+  "axes": {
+    "opsz": [
+      12,
+      72
+    ],
+    "slnt": [
+      0,
+      -10
+    ],
+    "wdth": [
+      75,
+      125
+    ],
+    "wght": [
+      400,
+      900
+    ]
+  },
+  "weights": [
+    400,
+    500,
+    600,
+    700,
+    800,
+    900
+  ],
+  "styles": [
+    "normal"
+  ],
+  "fallback": "sans-serif",
+  "previewText": "A social rhythm for product type.",
+  "description": "A modern sans-serif typeface from TikTok, built for clear brand expression across digital interfaces and communication.",
+  "submittedBy": {
+    "github": "thisisbremlo"
+  },
+  "files": [
+    {
+      "path": "/r/fonts/tiktok-sans/TikTokSans[opsz,slnt,wdth,wght].woff2",
+      "weight": "400 900",
+      "style": "normal"
+    }
+  ]
+}

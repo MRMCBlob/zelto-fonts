@@ -1,0 +1,33 @@
+{
+  "$schema": "../../schema.json",
+  "name": "momo-signature",
+  "displayName": "Momo Signature",
+  "version": "1.0",
+  "category": "handwriting",
+  "designer": "M — N Associates",
+  "license": {
+    "type": "OFL-1.1",
+    "url": "https://openfontlicense.org"
+  },
+  "source": "https://momo.vn",
+  "variable": false,
+  "weights": [
+    400
+  ],
+  "styles": [
+    "normal"
+  ],
+  "fallback": "cursive",
+  "previewText": "A personal mark inside digital trust.",
+  "description": "A handwritten signature-inspired typeface designed to add a personal, trusted, and individual tone.",
+  "submittedBy": {
+    "github": "thisisbremlo"
+  },
+  "files": [
+    {
+      "path": "/r/fonts/momo-signature/MomoSignature-Regular.woff2",
+      "weight": 400,
+      "style": "normal"
+    }
+  ]
+}
