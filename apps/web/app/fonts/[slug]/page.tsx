@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { GitHubIcon } from "@/components/icons/github";
 import { InstallCommand } from "@/components/install-command";
 import { TypeTester } from "@/components/type-tester";
+import { GlyphPreview } from "@/components/glyph-preview";
 import { DownloadButton } from "@/components/download-button";
 import { MotionA, MotionLink, pressable } from "@/components/motion-primitives";
 import { humanizeCategory } from "@zelto/registry/constants";
@@ -112,6 +113,11 @@ export default async function FontPage({ params }: Props) {
 
             <h2 className="mb-6 font-mono text-xs uppercase tracking-wide text-muted-foreground">Type tester</h2>
             <TypeTester font={font} />
+
+            <Separator className="my-10" />
+
+            <h2 className="mb-6 font-mono text-xs uppercase tracking-wide text-muted-foreground">Glyphs</h2>
+            <GlyphPreview font={font} />
 
             <Separator className="my-10" />
 
