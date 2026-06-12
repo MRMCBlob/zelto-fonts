@@ -1,14 +1,26 @@
 import { z } from "zod";
-import { FONT_CATEGORIES, FONT_FEATURES, FONT_STYLES } from "./constants.ts";
+import { CATEGORY_PATTERN, FONT_CATEGORIES, FONT_FEATURES, FONT_STYLES } from "./constants.ts";
 
 export {
+  CATEGORY_PATTERN,
   FONT_CATEGORIES,
   FONT_FEATURES,
   FONT_STYLES,
+  humanizeCategory,
   type FontCategory,
   type FontFeature,
   type FontStyle,
 } from "./constants.ts";
+
+/**
+ * Any kebab-case category slug. The curated `FONT_CATEGORIES` are advertised as
+ * examples (for editor autocomplete) but are not enforced, so new categories
+ * can be added without a schema change.
+ */
+export const categorySchema = z
+  .string()
+  .regex(CATEGORY_PATTERN)
+  .meta({ examples: [...FONT_CATEGORIES] });
 
 export const fontFileSchema = z.object({
   /** URL path relative to the registry base, e.g. "/r/fonts/inter/InterVariable.woff2" */
@@ -25,7 +37,7 @@ export const fontSchema = z.object({
   displayName: z.string().min(1),
   /** Upstream font version */
   version: z.string().min(1),
-  category: z.enum(FONT_CATEGORIES),
+  category: categorySchema,
   designer: z.string().min(1),
   license: z.object({
     type: z.string().min(1),

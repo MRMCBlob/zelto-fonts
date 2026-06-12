@@ -8,6 +8,7 @@ import { InstallCommand } from "@/components/install-command";
 import { TypeTester } from "@/components/type-tester";
 import { DownloadButton } from "@/components/download-button";
 import { MotionA, MotionLink, pressable } from "@/components/motion-primitives";
+import { humanizeCategory } from "@zelto/registry/constants";
 import { getFont, getFonts } from "@/lib/fonts-data";
 import { previewFamily } from "@/lib/preview";
 import { siteConfig } from "@/lib/site";
@@ -95,7 +96,7 @@ export default async function FontPage({ params }: Props) {
                 {font.displayName}
               </h1>
               <Badge variant="secondary" className="font-mono text-[11px] font-normal text-muted-foreground">
-                {CATEGORY_LABELS[font.category] ?? font.category}
+                {CATEGORY_LABELS[font.category] ?? humanizeCategory(font.category)}
               </Badge>
             </div>
             <p className="mt-4 max-w-xl leading-6 text-muted-foreground">{font.description}</p>
