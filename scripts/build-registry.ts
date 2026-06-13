@@ -20,6 +20,7 @@ import {
   type Font,
   type Registry,
 } from "../packages/registry/src/index.ts";
+import { extractCodepoints } from "./woff2-glyphs.ts";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
 const SRC_DIR = path.join(ROOT, "registry", "fonts");
@@ -65,9 +66,21 @@ async function loadFonts(): Promise<Font[]> {
         errors.push(`${slug}: referenced file not found on disk: ${onDisk}`);
       }
     }
-    if (!existsSync(path.join(SRC_DIR, slug, "files", "OFL.txt"))) {
-      errors.push(`${slug}: missing files/OFL.txt (license must ship with the font)`);
+    const licenseFiles = ["OFL.txt", "FFL.txt", "LICENSE.txt"];
+    if (!licenseFiles.some((f) => existsSync(path.join(SRC_DIR, slug, "files", f)))) {
+      errors.push(`${slug}: missing license file (one of ${licenseFiles.join(", ")} must ship with the font)`);
     }
+
+    // Derive real glyph coverage from the font's cmap so the site can show its
+    // full character set. Non-fatal: a parse failure just omits coverage.
+    const coverFile = font.files.find((f) => f.style === "normal") ?? font.files[0];
+    try {
+      const woff2 = await readFile(path.join(SRC_DIR, slug, "files", path.basename(coverFile.path)));
+      font.glyphs = extractCodepoints(woff2);
+    } catch (e) {
+      console.warn(`  ! ${slug}: could not read glyph coverage (${(e as Error).message})`);
+    }
+
     fonts.push(font);
   }
 

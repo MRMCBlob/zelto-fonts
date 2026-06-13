@@ -2,6 +2,10 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/* sources are auto-detected; donor/ + icons/ were added after first run */
+@source "../app";
+@source "../components";
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

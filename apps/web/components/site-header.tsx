@@ -3,6 +3,7 @@ import { StarIcon } from "@phosphor-icons/react/dist/ssr";
 import { siteConfig } from "@/lib/site";
 import { getFonts } from "@/lib/fonts-data";
 import { GitHubIcon } from "@/components/icons/github";
+import { GradientHeartIcon } from "@/components/icons/heart";
 import { NumberWheel } from "@/components/number-wheel";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { RandomFontButton } from "@/components/random-font-button";
@@ -12,6 +13,7 @@ const nav = [
   { href: "/", label: "Fonts" },
   { href: "/docs", label: "Docs" },
   { href: "/submit", label: "Submit" },
+  { href: "/donor", label: "Donors" },
 ];
 
 /** GitHub star count, revalidated hourly. Returns 0 until the repo exists. */
@@ -46,7 +48,10 @@ export async function SiteHeader() {
               href={item.href}
               className="group relative py-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
-              {item.label}
+              <span className="inline-flex items-center gap-1.5">
+                {item.label}
+                {item.href === "/donor" && <GradientHeartIcon className="size-4" />}
+              </span>
               <span className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-foreground transition-transform duration-200 ease-out group-hover:scale-x-100" />
             </Link>
           ))}

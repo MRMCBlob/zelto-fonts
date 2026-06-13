@@ -73,13 +73,61 @@ export function Catalog({ fonts }: { fonts: Font[] }) {
     });
   }, [fonts, query, category, feature]);
 
+  const categoryField = (
+    <Select value={category} onValueChange={setCategory}>
+      <SelectTrigger className="h-auto w-full border-0 bg-transparent p-0 text-sm shadow-none focus-visible:ring-2 focus-visible:ring-ring/50 dark:bg-transparent dark:hover:bg-transparent">
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        {categories.map((option) => (
+          <SelectItem key={option.value} value={option.value}>
+            {option.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
+
+  const featureField = (
+    <Select value={feature} onValueChange={setFeature}>
+      <SelectTrigger className="h-auto w-full border-0 bg-transparent p-0 text-sm shadow-none focus-visible:ring-2 focus-visible:ring-ring/50 dark:bg-transparent dark:hover:bg-transparent">
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        {FEATURE_OPTIONS.map((option) => (
+          <SelectItem key={option.value} value={option.value}>
+            {option.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
+
   return (
     <section id="fonts" className="mx-auto max-w-screen-xl px-4 sm:px-6">
       <h2 className="sr-only">Font catalog</h2>
       <div className="sticky top-16 z-40 -mx-4 border-b border-border bg-background/80 px-4 py-4 backdrop-blur sm:-mx-6 sm:px-6">
         <div className="mx-auto flex max-w-screen-xl flex-col gap-3">
-          {/* Airbnb-style segmented search bar */}
-          <div className="flex items-stretch divide-x divide-border border border-border bg-card shadow-card">
+          {/* Mobile: stacked search + a two-up Type/Features row */}
+          <div className="flex flex-col gap-3 sm:hidden">
+            <label className="flex items-center gap-3 border border-border bg-card px-4 py-3 shadow-card focus-within:ring-2 focus-within:ring-ring/50">
+              <MagnifyingGlassIcon className="size-4 shrink-0 text-muted-foreground" weight="bold" />
+              <input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search fonts…"
+                aria-label="Search fonts"
+                className="w-full bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground"
+              />
+            </label>
+            <div className="flex items-stretch divide-x divide-border border border-border bg-card shadow-card">
+              <Segment label="Type" className="flex-1">{categoryField}</Segment>
+              <Segment label="Features" className="flex-1">{featureField}</Segment>
+            </div>
+          </div>
+
+          {/* Desktop: Airbnb-style segmented search bar */}
+          <div className="hidden items-stretch divide-x divide-border border border-border bg-card shadow-card sm:flex">
             <Segment label="Search" className="flex-[1.2]">
               <input
                 value={query}
@@ -96,34 +144,8 @@ export function Catalog({ fonts }: { fonts: Font[] }) {
                 className="w-full bg-transparent text-sm text-foreground outline-none ring-ring/50 focus-visible:ring-2 placeholder:text-muted-foreground"
               />
             </Segment>
-            <Segment label="Type" className="flex-1">
-              <Select value={category} onValueChange={setCategory}>
-                <SelectTrigger className="h-auto w-full border-0 bg-transparent p-0 text-sm shadow-none focus-visible:ring-2 focus-visible:ring-ring/50 dark:bg-transparent dark:hover:bg-transparent">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {categories.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </Segment>
-            <Segment label="Features" className="flex-1">
-              <Select value={feature} onValueChange={setFeature}>
-                <SelectTrigger className="h-auto w-full border-0 bg-transparent p-0 text-sm shadow-none focus-visible:ring-2 focus-visible:ring-ring/50 dark:bg-transparent dark:hover:bg-transparent">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {FEATURE_OPTIONS.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </Segment>
+            <Segment label="Type" className="flex-1">{categoryField}</Segment>
+            <Segment label="Features" className="flex-1">{featureField}</Segment>
             <div className="flex items-center px-3 py-2">
               <motion.button
                 type="button"

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GitHubIcon } from "@/components/icons/github";
-import { MotionA, pressable } from "@/components/motion-primitives";
+import { MotionA, Reveal, pressable } from "@/components/motion-primitives";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -37,13 +37,18 @@ export default function SubmitPage() {
 
       <ol className="mt-12 flex flex-col gap-6">
         {steps.map((step, i) => (
-          <li key={step.title} className="flex gap-5 border border-border bg-card p-6 shadow-card">
+          <Reveal
+            as="li"
+            key={step.title}
+            delay={i * 0.08}
+            className="flex gap-5 border border-border bg-card p-6 shadow-card"
+          >
             <span className="font-mono text-sm text-brand">0{i + 1}</span>
             <div>
               <h2 className="font-medium text-foreground">{step.title}</h2>
               <p className="mt-1 text-sm leading-6 text-muted-foreground">{step.body}</p>
             </div>
-          </li>
+          </Reveal>
         ))}
       </ol>
 

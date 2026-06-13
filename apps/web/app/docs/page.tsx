@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { InstallCommand } from "@/components/install-command";
+import { Reveal } from "@/components/motion-primitives";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -95,10 +96,10 @@ GET ${siteConfig.url}/r/fonts/<name>/*     woff2 files + license`}</CodeBlock>
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="mt-12">
+    <Reveal as="section" className="mt-12">
       <h2 className="text-xl font-semibold tracking-tight text-foreground">{title}</h2>
       <div className="mt-3 flex flex-col gap-3 leading-7 text-muted-foreground">{children}</div>
-    </section>
+    </Reveal>
   );
 }
 

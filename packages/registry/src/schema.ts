@@ -61,6 +61,8 @@ export const fontSchema = z.object({
     github: z.string().regex(/^[a-zA-Z0-9-]+$/),
   }),
   files: z.array(fontFileSchema).nonempty(),
+  /** Unicode code points the font contains (build-derived from the cmap; not authored). */
+  glyphs: z.array(z.number().int()).optional(),
 });
 
 export const registrySchema = z.object({

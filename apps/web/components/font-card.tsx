@@ -22,9 +22,17 @@ export function FontCard({ font, text, size }: { font: Font; text: string; size:
   return (
     <MotionCardLink
       href={`/fonts/${font.name}`}
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-48px" }}
       whileHover={{ y: -3 }}
       whileTap={{ scale: 0.99 }}
-      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+      transition={{
+        type: "spring",
+        stiffness: 400,
+        damping: 30,
+        opacity: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
+      }}
       className="group flex flex-col gap-6 border border-border bg-card p-6 shadow-card transition-shadow hover:shadow-card-hover"
     >
       <div className="flex items-baseline justify-between gap-4">
@@ -48,7 +56,10 @@ export function FontCard({ font, text, size }: { font: Font; text: string; size:
           {font.styles.includes("italic") ? " · italics" : ""}
         </span>
         <span className="font-mono transition-colors group-hover:text-brand">
-          npx zelto-fonts add {font.name} →
+          npx zelto-fonts add {font.name}{" "}
+          <span className="inline-block transition-transform duration-200 ease-out group-hover:translate-x-1">
+            →
+          </span>
         </span>
       </div>
     </MotionCardLink>

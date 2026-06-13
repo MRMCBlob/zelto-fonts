@@ -8,7 +8,7 @@ import { InstallCommand } from "@/components/install-command";
 import { TypeTester } from "@/components/type-tester";
 import { GlyphPreview } from "@/components/glyph-preview";
 import { DownloadButton } from "@/components/download-button";
-import { MotionA, MotionLink, pressable } from "@/components/motion-primitives";
+import { MotionA, MotionLink, Reveal, pressable } from "@/components/motion-primitives";
 import { humanizeCategory } from "@zelto/registry/constants";
 import { getFont, getFonts } from "@/lib/fonts-data";
 import { previewFamily } from "@/lib/preview";
@@ -111,30 +111,36 @@ export default async function FontPage({ params }: Props) {
 
             <Separator className="my-10" />
 
-            <h2 className="mb-6 font-mono text-xs uppercase tracking-wide text-muted-foreground">Type tester</h2>
-            <TypeTester font={font} />
+            <Reveal>
+              <h2 className="mb-6 font-mono text-xs uppercase tracking-wide text-muted-foreground">Type tester</h2>
+              <TypeTester font={font} />
+            </Reveal>
 
             <Separator className="my-10" />
 
-            <h2 className="mb-6 font-mono text-xs uppercase tracking-wide text-muted-foreground">Glyphs</h2>
-            <GlyphPreview font={font} />
+            <Reveal as="section">
+              <h2 className="mb-6 font-mono text-xs uppercase tracking-wide text-muted-foreground">Glyphs</h2>
+              <GlyphPreview font={font} />
+            </Reveal>
 
             <Separator className="my-10" />
 
-            <h2 className="mb-6 font-mono text-xs uppercase tracking-wide text-muted-foreground">Weights</h2>
-            <div className="flex flex-col divide-y divide-border border border-border bg-card">
-              {ladderWeights.map((weight) => (
-                <div key={weight} className="flex items-baseline gap-6 px-6 py-4">
-                  <span className="w-12 shrink-0 font-mono text-xs text-muted-foreground">{weight}</span>
-                  <p
-                    className="min-w-0 truncate text-3xl text-foreground"
-                    style={{ fontFamily: previewFamily(font.name, font.fallback), fontWeight: weight }}
-                  >
-                    {font.previewText}
-                  </p>
-                </div>
-              ))}
-            </div>
+            <Reveal>
+              <h2 className="mb-6 font-mono text-xs uppercase tracking-wide text-muted-foreground">Weights</h2>
+              <div className="flex flex-col divide-y divide-border border border-border bg-card">
+                {ladderWeights.map((weight) => (
+                  <div key={weight} className="flex items-baseline gap-6 px-6 py-4">
+                    <span className="w-12 shrink-0 font-mono text-xs text-muted-foreground">{weight}</span>
+                    <p
+                      className="min-w-0 truncate text-3xl text-foreground"
+                      style={{ fontFamily: previewFamily(font.name, font.fallback), fontWeight: weight }}
+                    >
+                      {font.previewText}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
           </div>
 
           <aside className="w-full shrink-0 lg:w-72">
@@ -152,8 +158,8 @@ export default async function FontPage({ params }: Props) {
               <MetaRow
                 label="Source"
                 value={
-                  <a href={font.source} target="_blank" rel="noreferrer" className="text-brand hover:underline">
-                    {font.source.replace("https://github.com/", "")}
+                  <a href={font.source} target="_blank" rel="noreferrer" className="break-all text-brand hover:underline">
+                    {font.source.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}
                   </a>
                 }
               />

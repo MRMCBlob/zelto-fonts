@@ -17,8 +17,7 @@ import { previewFamily } from "@/lib/preview";
 const UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 const LOWERCASE = "abcdefghijklmnopqrstuvwxyz".split("");
 const NUMERALS = "0123456789".split("");
-const PUNCTUATION = ".,:;!?'\"`«»‹›…·".split("");
-const SYMBOLS = "@#$%^&*()[]{}<>/\\|-_=+~".split("");
+const BASIC_CATS = ["Uppercase", "Lowercase", "Numerals"];
 
 const WEIGHT_NAMES: Record<number, string> = {
   100: "Thin",
@@ -79,11 +78,79 @@ function glyphName(ch: string): string {
   if (ch >= "A" && ch <= "Z") return `Capital Letter ${ch}`;
   if (ch >= "a" && ch <= "z") return `Small Letter ${ch.toUpperCase()}`;
   if (ch >= "0" && ch <= "9") return `Digit ${DIGIT_NAMES[Number(ch)]}`;
-  return PUNCT_NAMES[ch] ?? "Symbol";
+  if (PUNCT_NAMES[ch]) return PUNCT_NAMES[ch];
+  if (/\p{Lu}/u.test(ch)) return `Capital Letter ${ch}`;
+  if (/\p{Ll}/u.test(ch)) return `Small Letter ${ch}`;
+  return `Glyph ${ch}`;
 }
 
 function codePoint(ch: string): string {
   return `U+${(ch.codePointAt(0) ?? 0).toString(16).toUpperCase().padStart(4, "0")}`;
+}
+
+// ---- Full-set glyph categories (driven by the font's real cmap coverage) ----
+
+const FRACTIONS = new Set(["½", "¼", "¾"]);
+const CURRENCY = "$¢£¤¥";
+
+const CATEGORY_ORDER = [
+  "Your Letters",
+  "Uppercase",
+  "Lowercase",
+  "Numerals",
+  "Uppercase Accented",
+  "Lowercase Accented",
+  "Ligatures",
+  "Fractions",
+  "Ordinals",
+  "Superscript",
+  "Subscript",
+  "Punctuation",
+  "Currency",
+  "Symbols",
+  "Arrows",
+  "Math",
+  "Other",
+];
+
+/**
+ * Truly non-printing code points: whitespace, control, format, surrogates.
+ * Combining marks and uncategorised symbols are kept — the ink-check decides
+ * whether they actually render, so anything visible still gets shown (in "Other").
+ * Private-Use (logo) glyphs are intentionally not excluded.
+ */
+const INVISIBLE = /\p{Z}|\p{Cc}|\p{Cf}|\p{Cs}/u;
+
+function categorize(ch: string): string {
+  const cp = ch.codePointAt(0) ?? 0;
+  if (cp >= 0x41 && cp <= 0x5a) return "Uppercase";
+  if (cp >= 0x61 && cp <= 0x7a) return "Lowercase";
+  if (cp >= 0x30 && cp <= 0x39) return "Numerals";
+  if (cp >= 0xfb00 && cp <= 0xfb4f) return "Ligatures";
+  if (ch === "ª" || ch === "º" || cp === 0x2116) return "Ordinals";
+  if (cp === 0x00b2 || cp === 0x00b3 || cp === 0x00b9 || (cp >= 0x2070 && cp <= 0x207f)) return "Superscript";
+  if (cp >= 0x2080 && cp <= 0x209c) return "Subscript";
+  if (FRACTIONS.has(ch) || (cp >= 0x2150 && cp <= 0x215f) || cp === 0x2044) return "Fractions";
+  if (cp >= 0x2190 && cp <= 0x21ff) return "Arrows";
+  if ((cp >= 0x20a0 && cp <= 0x20bf) || CURRENCY.includes(ch)) return "Currency";
+  if (/\p{L}/u.test(ch)) {
+    const up = ch.toUpperCase();
+    const lo = ch.toLowerCase();
+    if (ch === up && ch !== lo) return "Uppercase Accented";
+    return "Lowercase Accented"; // lowercase + caseless letters (ß, etc.)
+  }
+  if (cp >= 0x2200 && cp <= 0x22ff) return "Math";
+  if (/\p{P}/u.test(ch)) return "Punctuation";
+  if (/\p{S}/u.test(ch)) return "Symbols";
+  return "Other";
+}
+
+/** Canvas `ctx.font` can't parse `var(--x)`; expand custom properties to their value. */
+function resolveFontStack(stack: string): string {
+  return stack.replace(/var\((--[\w-]+)\)/g, (_, name) => {
+    const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    return v || "sans-serif";
+  });
 }
 
 type Metrics = {
@@ -123,7 +190,7 @@ function useFontMetrics(family: string, weight: number): Metrics | null {
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
-      ctx.font = `${weight} ${EM}px ${family}`;
+      ctx.font = `${weight} ${EM}px ${resolveFontStack(family)}`;
       ctx.textBaseline = "alphabetic";
 
       const cap = ctx.measureText("H");
@@ -168,19 +235,99 @@ export function GlyphPreview({ font }: { font: Font }) {
 
   const customGlyphs = useMemo(() => [...new Set(custom.replace(/\s/g, "").split(""))], [custom]);
 
+  // The font's real glyph coverage, derived from its cmap at build time.
+  // Drop spaces / combining marks / control chars but keep Private-Use (logo) glyphs.
+  const coverage = useMemo(
+    () =>
+      (font.glyphs ?? [])
+        .map((cp) => String.fromCodePoint(cp))
+        .filter((ch) => !INVISIBLE.test(ch)),
+    [font.glyphs],
+  );
+
+  // Backstop: hide any glyph the font renders with no ink (e.g. a mapped-but-empty
+  // code point), and confirm visible ones like the Private-Use logo glyph render.
+  const [inkVisible, setInkVisible] = useState<Set<string> | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        await document.fonts.ready;
+      } catch {
+        /* ignore */
+      }
+      if (cancelled || coverage.length === 0) return;
+      const cv = document.createElement("canvas");
+      cv.width = 48;
+      cv.height = 48;
+      const ctx = cv.getContext("2d", { willReadFrequently: true });
+      if (!ctx) return;
+      const fam = resolveFontStack(family);
+      const visible = new Set<string>();
+      for (const ch of coverage) {
+        ctx.clearRect(0, 0, 48, 48);
+        ctx.font = `400 36px ${fam}`;
+        ctx.textBaseline = "middle";
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#000";
+        ctx.fillText(ch, 24, 24);
+        const d = ctx.getImageData(0, 0, 48, 48).data;
+        for (let i = 3; i < d.length; i += 4) {
+          if (d[i] !== 0) {
+            visible.add(ch);
+            break;
+          }
+        }
+      }
+      if (!cancelled) setInkVisible(visible);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [family, coverage]);
+
+  const visibleCoverage = useMemo(
+    () => (inkVisible ? coverage.filter((ch) => inkVisible.has(ch)) : coverage),
+    [coverage, inkVisible],
+  );
+
   const sections = useMemo(() => {
-    const base: { label: string; glyphs: string[] }[] = [
-      { label: "Uppercase", glyphs: UPPERCASE },
-      { label: "Lowercase", glyphs: LOWERCASE },
-      { label: "Numerals", glyphs: NUMERALS },
-    ];
-    if (fullSet) {
-      base.push({ label: "Punctuation", glyphs: PUNCTUATION });
-      base.push({ label: "Symbols", glyphs: SYMBOLS });
-    }
-    if (customGlyphs.length) base.unshift({ label: "Your Letters", glyphs: customGlyphs });
-    return base;
-  }, [fullSet, customGlyphs]);
+    const buckets = new Map<string, string[]>();
+    const add = (ch: string) => {
+      const cat = categorize(ch);
+      const arr = buckets.get(cat) ?? [];
+      arr.push(ch);
+      buckets.set(cat, arr);
+    };
+
+    // Basic is always available even if cmap parsing was unavailable.
+    const seen = new Set<string>();
+    const addUnique = (ch: string) => {
+      if (seen.has(ch)) return;
+      seen.add(ch);
+      add(ch);
+    };
+    [...UPPERCASE, ...LOWERCASE, ...NUMERALS].forEach(addUnique);
+
+    if (fullSet) visibleCoverage.forEach(addUnique);
+
+    const result = CATEGORY_ORDER.filter((c) => fullSet || BASIC_CATS.includes(c))
+      .map((label) => ({
+        label,
+        glyphs: (buckets.get(label) ?? []).sort(
+          (a, b) => (a.codePointAt(0) ?? 0) - (b.codePointAt(0) ?? 0),
+        ),
+      }))
+      .filter((s) => s.glyphs.length > 0);
+
+    if (customGlyphs.length) result.unshift({ label: "Your Letters", glyphs: customGlyphs });
+    return result;
+  }, [fullSet, visibleCoverage, customGlyphs]);
+
+  const totalGlyphs = useMemo(
+    () => sections.reduce((n, s) => (s.label === "Your Letters" ? n : n + s.glyphs.length), 0),
+    [sections],
+  );
 
   // Big preview: render glyph on a canvas so the baseline aligns exactly with the
   // HTML metric guide lines, which are positioned with the same formula below.
@@ -230,15 +377,16 @@ export function GlyphPreview({ font }: { font: Font }) {
 
     const text = customGlyphs.length ? custom.replace(/\s+/g, " ").trim() : selected;
     const ink = resolveColor("--foreground");
+    const canvasFamily = resolveFontStack(family);
 
     // Shrink the type size if a long string would overflow the preview width.
     let fs = layout.fs;
-    ctx.font = `${weight} ${fs}px ${family}`;
+    ctx.font = `${weight} ${fs}px ${canvasFamily}`;
     const maxWidth = size.w * 0.88;
     const measured = ctx.measureText(text).width;
     if (measured > maxWidth) {
       fs = fs * (maxWidth / measured);
-      ctx.font = `${weight} ${fs}px ${family}`;
+      ctx.font = `${weight} ${fs}px ${canvasFamily}`;
     }
 
     ctx.textAlign = "center";
@@ -319,7 +467,7 @@ export function GlyphPreview({ font }: { font: Font }) {
             <span className="font-mono text-xs text-muted-foreground">{codePoint(activeChar)}</span>
           </div>
 
-          <div ref={wrapRef} className="relative mt-4 h-[360px] w-full sm:h-[460px]">
+          <div ref={wrapRef} className="relative mt-4 w-full" style={{ height: 460 }}>
             <canvas ref={canvasRef} style={{ width: size.w, height: size.h }} className="block" />
             {showMetrics && layout
               ? (
@@ -335,14 +483,22 @@ export function GlyphPreview({ font }: { font: Font }) {
         </div>
 
         {/* Glyph grid */}
-        <div className="w-full shrink-0 p-4 sm:p-6 lg:w-[58%]">
+        <div className="min-w-0 flex-1 p-4 sm:p-6">
+          {fullSet ? (
+            <div className="mb-4 font-mono text-[11px] uppercase tracking-wide text-muted-foreground">
+              {totalGlyphs} Glyphs
+            </div>
+          ) : null}
           <div className="flex flex-col gap-8">
             {sections.map((section) => (
               <div key={section.label}>
                 <div className="mb-3 text-right font-mono text-[11px] uppercase tracking-wide text-muted-foreground">
                   {section.label}
                 </div>
-                <div className="grid grid-cols-[repeat(auto-fill,minmax(3rem,1fr))] gap-px bg-border">
+                <div
+                  className="grid border-l border-t border-border"
+                  style={{ gridTemplateColumns: "repeat(auto-fill, minmax(3rem, 1fr))" }}
+                >
                   {section.glyphs.map((ch, i) => {
                     const isActive = customGlyphs.length === 0 && ch === selected;
                     return (
@@ -355,10 +511,10 @@ export function GlyphPreview({ font }: { font: Font }) {
                         }}
                         aria-label={glyphName(ch)}
                         aria-pressed={isActive}
-                        className={`flex aspect-square items-center justify-center bg-card text-2xl text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 ${
+                        className={`flex items-center justify-center border-r border-b border-border bg-card text-2xl text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 ${
                           isActive ? "ring-2 ring-inset ring-brand" : ""
                         }`}
-                        style={{ fontFamily: family, fontWeight: weight }}
+                        style={{ fontFamily: family, fontWeight: weight, aspectRatio: "1 / 1" }}
                       >
                         {ch}
                       </button>

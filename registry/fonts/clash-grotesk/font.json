@@ -1,0 +1,24 @@
+{
+  "$schema": "../../schema.json",
+  "name": "clash-grotesk",
+  "displayName": "Clash Grotesk",
+  "version": "2.0",
+  "category": "sans",
+  "designer": "Indian Type Foundry",
+  "license": {
+    "type": "Fontshare Free Font License",
+    "url": "https://www.fontshare.com/fonts/clash-grotesk#notice-to-user"
+  },
+  "source": "https://www.fontshare.com/fonts/clash-grotesk",
+  "variable": true,
+  "axes": { "wght": [200, 700] },
+  "weights": [200, 300, 400, 500, 600, 700],
+  "styles": ["normal"],
+  "fallback": "sans-serif",
+  "previewText": "Confident type with a modern edge.",
+  "description": "A contemporary grotesque sans-serif with sturdy, slightly condensed letterforms, built for bold headlines and clean interface text.",
+  "submittedBy": { "github": "MRMCBlob" },
+  "files": [
+    { "path": "/r/fonts/clash-grotesk/ClashGrotesk-Variable.woff2", "weight": "200 700", "style": "normal" }
+  ]
+}
